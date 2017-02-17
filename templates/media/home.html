@@ -1,0 +1,109 @@
+{% extends "right_column.html" %}
+
+{% load search_tags %}
+
+{% block css %}
+{{block.super}}
+
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}media/css/media.css">
+
+{% endblock %}
+
+{% block alt-size %}col-lg-10{% endblock %}
+{% block alt-size-right %}col-lg-2{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{STATIC_URL}}js/src/upload.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/src/image_upload.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/query.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/media/js/view.js" ></script>  
+{% endblock js %}
+
+{% block page_title %}Harper360 - Media{% endblock %}
+
+{% block main %}
+
+<!-- Title -->
+<div class="container" id="main">
+    <div class="row-fluid">
+        <h2 class="section-header"><i class ="fa fa-file-image-o"></i>&nbsp;Media</h2>
+    </div>
+    <form id="search-form">
+        <div class="row">
+            <div class="pull-right"><a href="#" data-toggle="modal" data-target="#uploadModal" id="modal-link" style="font-size: 18px; font-weight: bold;"><i class="icon icon-upload" style="font-size: 25px;"></i> Upload Image</a>
+            </div>
+            <div class="pull-left">
+                <div class="btn-toolbar">
+                    <div class="input-group">
+                        <label class="control-label">Search Images by Title or Filename:</label>
+                        <input type="text" id="search_input" class="form-control input-lg" placeholder="Search Images" />
+                        <span class="input-group-btn">
+                        <button type="submit" id="search_button" class="btn btn-default">Search</button>
+                        </span>
+                    </div>
+                </div>
+                <div id="image-results"></div>
+                <div class="alert alert-danger search-alert" id="search-error">* Please enter a search</div>
+                <div class="alert alert-danger search-alert" id="short-error">* Search must be at least 3 characters</div>
+                <div class="alert alert-info search-alert" id="no-results">No results found for this search</div>
+            </div>
+        </div>
+    </form>
+    <div id="images"></div>
+</div>
+
+
+
+
+<!-- /VIEW TEMPLATE -->
+
+<!-- Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Image Upload</h3>
+      </div>
+      <div class="modal-body">
+        {% csrf_token %}
+        <div class="span12" id="upload"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/template" id="image-template">
+    <div class="col-md-3 image-item">
+        <div class="panel text-center">
+            <div class="panel-heading">
+                <h4 class="panel-title"><%= title %></h4>
+            </div>
+            <div class="panel-body panel-image">
+                <a href="/media/edit/<%= id %>/"><img src="//s3.amazonaws.com/<%= s3_bucket %>/desktop/<%=file_root %>_sm<%=file_ending %>" class="img-rounded"></a>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script>
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", $('input[name="csrfmiddlewaretoken"]').val());
+        }
+    });
+    var existing = {};
+    var upload = {};
+    $(document).ready(function() {
+        upload = new h360.util.imageUpload({
+            'el': $("#upload"),
+            'endpoints': {
+                'get': "/images/get_none/"
+            }
+        });
+    });
+</script>
+
+{% endblock main %}
+<!--End-->
+
+

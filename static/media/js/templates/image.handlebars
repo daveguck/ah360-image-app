@@ -1,0 +1,94 @@
+
+<div class="row">  
+    <div class="col-md-6">
+        <div class="expand-icon">
+            <a href="#image-fullsize" data-toggle="lightbox"><i class="fa fa-expand fa-2x full-size" aria-hidden="true" aria-label="Expand Image"></i></a>
+        </div>    
+        <img src="{{image_url}}" class="responsive image"/>
+    </div>    
+    <div class="col-md-6 image-info">
+        <div class="imageref-container">
+            <div class="imageref-body">
+                <h4>Image Reference</h4>
+                {{#if imageref}}
+                    {{#if dest_id}}
+                    <div><h5>Destinations -{{dest_name}}</h5></div>
+                    <div><a href='/destinations/edit/{{dest_id}}/' target="_blank">View on harper360</a> &nbsp; <a href='http://andrewharper.com/destinations/resource/{{dest_id}}/' target="_blank">View on andrewharper.com</a><div>
+                    {{/if}}
+                    {{#if itin_id}}
+                    <div><h5>Itineraries -{{itin_title}}<h5></div>
+                    <div><a href='/itineraries/edit/{{itin_id}}/' target="_blank">View on harper360</a> &nbsp; <a href='http://andrewharper.com/itinerary/{{itin_slug}}/' target="_blank">View on andrewharper.com</a><div>
+                    {{/if}}
+                    {{#if hotel_id}}
+                    <div><h5>Hotels -{{hotel_title}}</h5></div>
+                    <div><a href='/hotels/edit/hotel/{{hotel_id}}/' target="_blank">View on harper360</a> &nbsp; <a href='http://andrewharper.com/hotels/{{hotel_slug}}/' target="_blank">View on andrewharper.com</a><div>
+                    {{/if}}
+                    {{#if offer_hotel}}
+                    <div><h5>Offers: {{offer_hotel}} - {{offer_title}}</h5></div>
+                    <div><a href='/offers/edit/{{offer_id}}/' target="_blank">View image on Harper360</a> &nbsp; <a href='http://andrewharper.com/offers/special-offers/' target="_blank">View image on andrewharper.com</a><div>
+                    {{/if}}
+                    {{#if auction_hotel}}
+                    <div><h5>Auctions: {{auction_hotel}} - {{room_title}}</h5></div>
+                    <div><a href="/packages/edit-package/{{package_id}}/" target="_blank">View on Harper360</a></div>
+                    {{/if}}
+                    {{#if itin_inline_id}}
+                    <div><h5>Itineraries -{{itin_inline_title}}</h5></div>
+                    <div><a href='/itineraries/edit/{{itin_inline_id}}/' target="_blank">View on harper360</a> &nbsp; <a href='http://andrewharper.com/itinerary/{{itin_inline_slug}}/' target="_blank">View on andrewharper.com</a><div>
+                    {{/if}}
+                {{else}}
+                <div>A reference for this image could not be found</div>
+                {{/if}}
+            </div>
+        </div>
+        <div>
+            <br> Width: {{image.width}}
+            <br> Height: {{image.height}}
+        </div>
+        <div class="form-div">        
+            <form id="update-image">
+                <div class="input-group input-group-lg">
+                    <label>URL:</label>
+                    <input type="text" class="form-control" id="url" value="{{image.url}}" readonly>
+                    <button class="btn" data-clipboard-target="#url"><span class="fa fa-clipboard"></span></button>
+                </div>
+                <input name="id" type="hidden" value={{image.id}}>
+                <div class="input-group input-group-lg">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" value="{{image.title}}" required>
+                    <div class="alert alert-danger search-alert" id="update-fail">* This field cannot be blank</div>
+                </div>
+                <div class="input-group input-group-lg">
+                    <label>Alt Text</label>
+                    <input type="text" class="form-control" name="alt" value="{{image.alt}}">
+                </div>
+                <div class="input-group input-group-lg">
+                    <label>Caption</label>
+                    <input type="text" class="form-control" name="caption" value="{{image.caption}}">
+                </div>
+                <div class="input-group input-group-lg">
+                    <label>Copyright</label>
+                    <input type="text" class="form-control" name="credit" value="{{image.credit}}">
+                </div>
+                <div class="input-group input-group-lg">
+                    <label>Keywords</label>
+                    <input type="text" class="form-control" name="keywords" value="{{image.keywords}}">
+                </div>
+                <div class="update-button">
+                    <div class="btn-toolbar">
+                        <!-- UTILITY BUTTONS -->
+                        <div class="util-buttons">
+                            <div class="btn-group btn-group-sm"><button class="btn btn-default" type="submit" id="imgSave"><i class="fa fa-floppy-o fa-lg" aria-hidden="true" aria-label="Save"></i> Update Image</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class='alert alert-success search-alert' id='update-success' style='width: 200px;font-weight: bold'>Image Updated!</div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="image-fullsize" class="lightbox hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='lightbox-content'>
+        <img src="{{fullsize_url}}">
+        <div class="lightbox-caption"><p>{{image.title}}</p></div>
+    </div>
+</div>

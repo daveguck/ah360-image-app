@@ -1,0 +1,35 @@
+{% extends "right_column.html" %}
+
+{% load search_tags %}
+
+{% block css %}
+
+{{block.super}}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}media/css/media.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}media/css/bootstrap-lightbox.css">
+{% endblock %}
+
+{% block alt-size %}col-lg-10{% endblock %}
+{% block alt-size-right %}col-lg-2{% endblock %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/media/js/bootstrap-lightbox.js" ></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/media/js/templates/compiled-templates.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/media/js/editView.js"></script>
+{% endblock js %}
+
+{% block page_title %}Harper 360 - Edit Image{% endblock page_title %}
+
+{% block main %}
+{% csrf_token %}
+<div class="row-fluid">
+    <h2 class="section-header"><i class="fa fa-file-image-o"></i><a href ='javascript:history.back()'>&nbsp;Media </a>&raquo; Edit Image</h2>
+</div>
+
+<div id="image_container"></div>
+
+<script type="text/javascript">
+	var imageData = {{context_json|safe}};
+</script>
+{% endblock main %}
